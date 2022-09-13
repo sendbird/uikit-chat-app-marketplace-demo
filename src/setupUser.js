@@ -27,7 +27,7 @@ class Sendbird {
             const newUserId = uuidv4();
             const user = await this.sb.connect(newUserId);
 
-            const marketplaceChannel = await this.createChannel("White Couch", newUserId, user);
+            const marketplaceChannel = await this.createChannel("Matt", newUserId, user);
 
 
             localStorage.setItem('sb-user-id', user.userId);
