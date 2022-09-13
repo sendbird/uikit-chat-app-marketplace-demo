@@ -16,7 +16,7 @@ class Sendbird {
     }
     async setUp() {
         const userId = localStorage.getItem('sb-user-id');
-        if (userId) {
+        if (false) {
             const user = await this.sb.connect(userId);
 
             const marketplaceChannel = await this.sb.groupChannel.getChannel(`Marketplace-${userId}`);
