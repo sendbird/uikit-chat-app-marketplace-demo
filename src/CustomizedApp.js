@@ -8,7 +8,7 @@ import ChannelPreview from "./ChannelPreview";
 import IconArrowLeft from "./icon-arrow-left.svg";
 
 
-function CustomizedApp() {
+function CustomizedApp({ channelUrls }) {
   const [channel, setChannel] = useState(null);
 
   const onChannelSelect = (_channel) => {
@@ -23,14 +23,14 @@ function CustomizedApp() {
 
   return (
     <div className="uikit">
-      {channel ? (
+      {channelUrls ? (
         <div className="sb-conversation">
           {/* temp hack to get working for demo. We want our own component defined via renderChannelHeader */}
-          <button className="back-button" onClick={onBack}>
+          {/* <button className="back-button" onClick={onBack}>
             <img width={20} heigth={20} src={IconArrowLeft} alt="Back button" />
-          </button>
+          </button> */}
           <SBConversation
-            channelUrl={channel.url}
+            channelUrl={channelUrls.marketplace}
           // renderChannelHeader={() => (
           //   <ChatHeader channel={channel} onBack={onBack} />
           // )}

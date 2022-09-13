@@ -41,25 +41,33 @@ button {
 .uikit {
   width: 400px;
   height: 800px;
-  float: left;
-  background: #6210cc;
-  border-radius: 15px;
-  padding: 40px;
+  /* float: left; */
+  /* background: #6210cc; */
+  border-radius: 0px;
+  /* padding: 40px; */
   position: fixed;
-  margin-left: 5%;
+  /* margin-left: 5%; */
+  bottom: 0px;
+  right: 30px;
 }
 
 .uikit .sb-channel-list {
   width: 400px;
   height: 100%;
+  border: 1px solid #e1e1e1;
 }
 
-.uikit .sb-conversation,
+.uikit .sendbird-conversation,
 .uikit .sb-channel-list {
+  border-radius: 10px 10px 0px 0px!important;
   /* width: 400px; */
   /* height: 90%; */
   /* padding-left: 10%;
     padding-top: 5%; */
+}
+
+.uikit .sb-conversation{
+  height: 100%;
 }
 
 .sendbird-conversation,
@@ -158,11 +166,11 @@ button {
 }
 
 .app-description {
-  width: 50%;
+  /* width: 50%;
   float: left;
   height: 840px;
   padding-left: 20%;
-  margin-left: 400px;
+  margin-left: 400px; */
 }
 
 .app-description .h3 {
@@ -444,3 +452,34 @@ button {
     .app-description {display:none;}
     .uikit {display:block; width: 100%; height: 100%; background: none ;}
 }
+
+.sendbird-app img[src*='#hero']:not(.sendbird-app td img[src*='#hero']){
+  margin-top: -8px!important;
+}
+
+.sendbird-button--small{
+  height: auto!important;
+}
+
+.outgoing button{
+  border-color:white!important;
+
+}
+
+.outgoing button:hover{
+  border-color:rgb(211, 211, 211)!important;
+
+}
+
+.outgoing .sendbird-button__text{
+  color:white!important;
+
+}
+
+.outgoing button:hover .sendbird-button__text{
+  color:rgb(213, 213, 213)!important;
+}
+
+.outgoing .sendbird-label--body-1{
+  color:white;
+} 

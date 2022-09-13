@@ -1,64 +1,29 @@
-import React from "react";
-import SBProvider from "@sendbird/uikit-react/SendbirdProvider";
-import "./styles.css";
-import CustomizedApp from "./CustomizedApp";
+import React, { useState } from "react";
 import Sendbird from "./setupUser";
-import AppDescription from "./AppDescription";
 import { APP_ID, NICKNAME } from './constants';
-const appManifests = [
-  {
-    "name": "basic-chat-app",
-    // "url": "http://localhost:8283/basic-chat-app",
-    "command": "basic"
-  },
-  {
-    "name": "giphy-app",
-    // "url": "http://localhost:8282/app",
-    "url": "https://chatsamples.com/giphy/app",
-    "command": "giphy"
-  },
-  {
-    "name": "promotion",
-    // "url": "http://localhost:8284/app",
-    "url": "https://chatsamples.com/promotion/app"
-  },
-  {
-    "name": "order-tracking",
-    "url": "http://localhost:8286/app"
-  },
-  {
-    "name": "concierge",
-    // "url": "http://localhost:8287/app",
-    "url": "https://chatsamples.com/sales-concierge/app"
-  }
-];
+import "./styles.css";
+import AppDescription from "./AppDescription";
+import SBProvider from "@sendbird/uikit-react/SendbirdProvider";
+import Marketplace from "./Marketplace";
+import ProductPage from "./ProductPage";
 
 export default function App() {
-  // setup
   const [user, setUser] = React.useState();
   const [channelUrls, setChannelUrls] = React.useState({});
   const [isLoading, setIsLoading] = React.useState(true);
+  const [showProductPage, setShowProductPage] = useState(false);
+  const [itemSelected, setItem] = useState({});
   const sendbird = new Sendbird(APP_ID);
-
   React.useEffect(() => {
     const setup = async () => {
       // setup a new user if non exists and create necesary channels e.g. promotion
       // Some of this data needs to be passed to the trigger button and sent in fetch request
       const [
         user,
-        promotionsChannel,
-        conciergeChannel,
-        supportChannel,
-        trackingChannel,
         marketplaceChannel,
       ] = await sendbird.setUp();
-      console.log(promotionsChannel);
       setUser(user);
       setChannelUrls({
-        promotion: promotionsChannel.url,
-        "sales-concierge": conciergeChannel.url,
-        "support-agent": supportChannel.url,
-        "order-tracking": trackingChannel.url,
         marketplace: marketplaceChannel.url,
       });
       setIsLoading(false);
@@ -72,18 +37,10 @@ export default function App() {
 
     const [
       user,
-      promotionsChannel,
-      conciergeChannel,
-      supportChannel,
-      trackingChannel,
       marketplaceChannel,
     ] = await sendbird.setUp();
     setUser(user);
     setChannelUrls({
-      promotion: promotionsChannel.url,
-      "sales-concierge": conciergeChannel.url,
-      "support-agent": supportChannel.url,
-      "order-tracking": trackingChannel.url,
       marketplace: marketplaceChannel.url,
     });
     setIsLoading(false);
@@ -97,9 +54,16 @@ export default function App() {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ channelUrl: channelUrls[name], item }),
+      body: JSON.stringify({ channelUrl: channelUrls[name], item, user }),
     });
   };
+  // setup
+  const appManifests = [
+    {
+      name: 'marketplace',
+      url: 'https://chatsamples.com/marketplace/app'
+    }
+  ];
 
   if (isLoading) {
     return null;
@@ -107,13 +71,15 @@ export default function App() {
 
   return (
     // need SB Provider at top level so all of app has access to sendbird data
-    <div className="component-wrapper">
-      <div className="flex-wrap">
-        <SBProvider config={{ appManifests }} appId={APP_ID} userId={user.userId} nickname={NICKNAME}>
-          <CustomizedApp userId={user.userId} />
-          <AppDescription reset={reset} start={start} />
-        </SBProvider>
+    <SBProvider config={{ appManifests }} appId={APP_ID} userId={user.userId} nickname={NICKNAME}>
+
+      <div className="component-wrapper">
+        {showProductPage ? (
+          <ProductPage itemSelected={itemSelected} user={user} start={start} setShowProductPage={setShowProductPage} channelUrls={channelUrls} />
+        ) : (
+          <Marketplace setShowProductPage={setShowProductPage} setItem={setItem} />
+        )}
       </div>
-    </div>
+    </SBProvider>
   );
 }
