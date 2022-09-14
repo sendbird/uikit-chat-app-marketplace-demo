@@ -453,9 +453,9 @@ button {
     .uikit {display:block; width: 100%; height: 100%; background: none ;}
 }
 
-.sendbird-app img[src*='#hero']:not(.sendbird-app td img[src*='#hero']){
+/* .sendbird-app img[src*='#hero']:not(.sendbird-app td img[src*='#hero']){
   margin-top: -8px!important;
-}
+} */
 
 .sendbird-button--small{
   height: auto!important;
