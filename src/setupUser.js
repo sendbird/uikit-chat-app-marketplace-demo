@@ -30,7 +30,7 @@ class Sendbird {
             const marketplaceChannel = await this.createChannel("Matt", newUserId, user);
 
 
-            localStorage.setItem('sb-user-id', user.userId);
+            // localStorage.setItem('sb-user-id', user.userId);
 
             return [user, marketplaceChannel];
 
